@@ -21,7 +21,8 @@ class BDService {
             if(tableName) {
                 this.sequelize.define(instantiatedEntity.modelName, instantiatedEntity.getAttributes(), 
                 {tableName : tableName,
-                freezeTableName : true})
+                freezeTableName : true,
+                paranoid : true})
             }
         }
     }

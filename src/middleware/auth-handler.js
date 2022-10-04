@@ -6,7 +6,7 @@ const { noAuthRoutes, adminRoutes } = require('../routes/whitelisted-routes')
 
 async function handleAuth(req, res, next) {
     try {
-        const url = req.originalUrl;
+        const url = replaceUrlToHandle(req.originalUrl);
         const method = req.method;
         if (noAuthRoutes.find(noAuthRoute => noAuthRoute.url == url && noAuthRoute.method == method)) {
             next();
@@ -14,7 +14,6 @@ async function handleAuth(req, res, next) {
         }
         const token = req.headers["authorization"];
         req.userInfo = jwtService.verify(token, jwtSecret);
-        console.log(req.userInfo)
         if (!req.userInfo) {
             throw new HttpForbiddenError("Usuário não autenticado");
         } else if(!req.userInfo.userrole.adminRights && 
@@ -29,5 +28,10 @@ async function handleAuth(req, res, next) {
         handleError(error, res, res, next)
     }
 }
+
+    function replaceUrlToHandle(urlString) {
+        let url = urlString.replace(/[0-9]/g, '');
+        return url[url.length - 1] == '/' ? url.substring(0, url.length - 1) : url
+    }
 
 module.exports = handleAuth;

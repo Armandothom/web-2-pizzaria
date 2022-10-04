@@ -24,10 +24,6 @@ const adminRoutes = [
     },
     {
         url : "/user",
-        method : "PUT"
-    },
-    {
-        url : "/user",
         method : "DELETE"
     },
 ];
