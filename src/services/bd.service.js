@@ -5,20 +5,39 @@ const {BaseEntity, UserEntity, UserRoleEntity} = require('../models/entities')
 const ModelNotFoundError = require('../models/errors/model-not-found.error')
 
 class BDService {
+    initializedEntities = [];
     constructor() {
         this.sequelize = new Sequelize(`postgres://${config.development.username}:${config.development.password}@${config.development.host}:${config.development.port}/${config.development.database}`);
         this.initializeEntities();
+        this.setAssociation();
     }
 
     initializeEntities() {
         const entities = [UserEntity, BaseEntity, UserRoleEntity]
         for (const Entity of entities) {
             const instantiatedEntity = new Entity();
+            this.initializedEntities.push(instantiatedEntity)
             const tableName = instantiatedEntity.getTableName();
             if(tableName) {
                 this.sequelize.define(instantiatedEntity.modelName, instantiatedEntity.getAttributes(), 
                 {tableName : tableName,
                 freezeTableName : true})
+            }
+        }
+    }
+
+    setAssociation() {
+        for (const entity of this.initializedEntities) {
+            for (const key of Object.keys(entity.getAttributes())) {
+                if(entity.attributes[key].references) {
+                    const modelReferencedName = entity.attributes[key].references.model;
+                    const modelReferenced = this.getModel(modelReferencedName);
+                    const modelParent = this.getModel(entity.modelName);
+                    modelParent.belongsTo(modelReferenced, {
+                        targetKey : "id",
+                        foreignKey : entity.attributes[key].references.field
+                    });
+                }
             }
         }
     }
@@ -72,24 +91,20 @@ class BDService {
         }
     }
 
-    async getAll(modelName, whereOptions = null) {
+    async getAll(modelName, options = null, association = null) {
         try {
             let model = this.getModel(modelName);
-            const modelValue = await model.findAll(whereOptions ? {
-                where : whereOptions
-            } : {})
+            const modelValue = await model.findAll(options ? options : {})
             return modelValue.map((model) => model.get({plain : true}))
         } catch (error) {
             throw error;
         }
     }
 
-    async getById(modelName, whereOptions = null) {
+    async getById(modelName, options = null) {
         try {
             let model = this.getModel(modelName);
-            return await model.findOne({
-                where : whereOptions
-            })
+            return await model.findOne(options ? options : {})
         } catch (error) {
             throw error;
         }

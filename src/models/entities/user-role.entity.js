@@ -3,7 +3,7 @@ const { DataTypes, } = require('sequelize');
 
 class UserRoleEntity extends BaseEntity {
     constructor() {
-        super("UserRole");
+        super("userrole");
         this.setAttributes({
             nomeRole  : {
                 type : DataTypes.STRING,

@@ -1,6 +1,6 @@
 
     const UserRoleEntity = require('../src/models/entities/user-role.entity')
-    const UserEntity = require('../src/models/entities/user.entity')
+const UserEntity = require('../src/models/entities/user.entity')
 
     'use strict';
 

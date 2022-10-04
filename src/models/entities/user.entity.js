@@ -4,7 +4,7 @@ const UserRoleEntity = require('./user-role.entity');
 
 class UserEntity extends BaseEntity {
     constructor() {
-        super("User");
+        super("user");
         this.setAttributes({
             email : {
                 type : DataTypes.STRING,
@@ -21,7 +21,8 @@ class UserEntity extends BaseEntity {
                 allowNull : false,
                 references : {
                     model : new UserRoleEntity().getTableName(),
-                    key : "id"
+                    key : "id",
+                    field : "user_role_id"
                 }
 
             }
