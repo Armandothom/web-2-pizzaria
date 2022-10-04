@@ -1,8 +1,7 @@
 
 const { Sequelize } = require('sequelize');
 const config = require('../../config/config.json')
-const UserEntity = require('../entities/user.entity')
-const BaseEntity = require('../entities/base.entity')
+const {BaseEntity, UserEntity, UserRoleEntity} = require('../models/entities')
 const ModelNotFoundError = require('../models/errors/model-not-found.error')
 
 class BDService {
@@ -12,10 +11,15 @@ class BDService {
     }
 
     initializeEntities() {
-        const entities = [UserEntity, BaseEntity]
+        const entities = [UserEntity, BaseEntity, UserRoleEntity]
         for (const Entity of entities) {
             const instantiatedEntity = new Entity();
-            this.sequelize.define(instantiatedEntity.modelName, instantiatedEntity.getAttributes())
+            const tableName = instantiatedEntity.getTableName();
+            if(tableName) {
+                this.sequelize.define(instantiatedEntity.modelName, instantiatedEntity.getAttributes(), 
+                {tableName : tableName,
+                freezeTableName : true})
+            }
         }
     }
 
@@ -69,10 +73,14 @@ class BDService {
     }
 
     async getAll(modelName, whereOptions = null) {
-        let model = this.getModel(modelName);
-        return await model.findAll(whereOptions ? {
-            where : whereOptions
-        } : {})
+        try {
+            let model = this.getModel(modelName);
+            return await model.findAll(whereOptions ? {
+                where : whereOptions
+            } : {})
+        } catch (error) {
+            throw error;
+        }
     }
 
     async getById(modelName, whereOptions = null) {

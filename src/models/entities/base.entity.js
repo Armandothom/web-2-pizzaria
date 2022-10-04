@@ -10,6 +10,14 @@ class BaseEntity {
         deletedAt : {
             allowNull : true,
             type : DataTypes.DATE
+        },
+        createdAt : {
+            allowNull : true,
+            type : DataTypes.DATE
+        },
+        updatedAt : {
+            allowNull : true,
+            type : DataTypes.DATE
         }
     }
     constructor(modelName) {
@@ -28,7 +36,7 @@ class BaseEntity {
     }
 
     getTableName() {
-        return this.modelName.toLowerCase();
+        return this.modelName ? this.modelName.toLowerCase() : null;
     }
 }
 

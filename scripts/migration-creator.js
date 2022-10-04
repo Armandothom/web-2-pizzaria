@@ -1,8 +1,8 @@
 const fs = require('fs');
 const exec = require('await-exec')
 const nameMigration = process.env.npm_config_name
-const entitiesPathSuffix = "./src/entities/"
-
+const entitiesPathSuffix = "./src/models/entities"
+const userEntity = require('../src/models/entities/user.entity')
 
 createMigration();
 
@@ -46,7 +46,9 @@ function getFileName(name) {
 function getEntities() {
     let entities = [];
     fs.readdirSync(entitiesPathSuffix).forEach(file => {
-        console.log(`${entitiesPathSuffix}/${file.substring(0, file.length - 3)}`)
+        if(file.includes("index.js")) {
+            return;
+        }
         let pathClass = `.${entitiesPathSuffix}/${file.substring(0, file.length - 3)}`;
         let classContent = require(pathClass);
         entities.push({

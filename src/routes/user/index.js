@@ -1,6 +1,7 @@
 const routing = require('express').Router()
 
 routing.get('/', (request, response) => {
+    app.userService.
     response.send({message : "oi"})
 })
 
