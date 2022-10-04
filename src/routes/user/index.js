@@ -4,15 +4,16 @@ routing.get('/', (request, response) => {
     response.send({message : "oi"})
 })
 
-routing.post('/', (request, response) => {
-    response.send({message : "oi"})
+routing.post('/', async (request, response, next) => {
+    try {
+        await request.app.get('userService').cadastrarUsuario(request.body);
+        response.send({success : true})
+    } catch (error) {
+        next(error)
+    }
 })
 
-routing.put('/', (request, response) => {
-    response.send({message : "oi"})
-})
-
-routing.delete('/', (request, response) => {
+routing.put('/:id', (request, response) => {
     response.send({message : "oi"})
 })
 

@@ -6,6 +6,10 @@ class UserEntity extends BaseEntity {
     constructor() {
         super("user");
         this.setAttributes({
+            nome : {
+                type : DataTypes.STRING,
+                allowNull : false,
+            },
             email : {
                 type : DataTypes.STRING,
                 allowNull : false,
