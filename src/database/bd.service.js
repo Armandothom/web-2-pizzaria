@@ -6,7 +6,6 @@ const BaseEntity = require('../entities/base.entity')
 const ModelNotFoundError = require('../models/errors/model-not-found.error')
 
 class BDService {
-
     constructor() {
         this.sequelize = new Sequelize(`postgres://${config.development.username}:${config.development.password}@${config.development.host}:${config.development.port}/${config.development.database}`);
         this.initializeEntities();
@@ -89,3 +88,5 @@ class BDService {
 
     
 }
+
+module.exports = BDService
