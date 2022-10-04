@@ -5,8 +5,10 @@ const routes = require('./src/routes')
 const port = 3000
 const {BDService, AuthService} = require('./src/services')
 const handleError = require('./src/middleware/error-handler')
+const handleAuth = require('./src/middleware/auth-handler')
 
 app.use(bodyParser.json())
+app.use(handleAuth)
 app.use('/', routes);
 createServices();
 app.use(handleError)

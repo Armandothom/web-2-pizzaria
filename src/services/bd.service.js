@@ -75,9 +75,10 @@ class BDService {
     async getAll(modelName, whereOptions = null) {
         try {
             let model = this.getModel(modelName);
-            return await model.findAll(whereOptions ? {
+            const modelValue = await model.findAll(whereOptions ? {
                 where : whereOptions
             } : {})
+            return modelValue.map((model) => model.get({plain : true}))
         } catch (error) {
             throw error;
         }
