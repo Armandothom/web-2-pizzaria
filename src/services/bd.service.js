@@ -3,6 +3,7 @@ const { Sequelize } = require('sequelize');
 const config = require('../../config/config.json')
 const {BaseEntity, UserEntity, UserRoleEntity} = require('../models/entities')
 const ModelNotFoundError = require('../models/errors/model-not-found.error')
+const PublicationEntity = require('../models/entities/publication.entity')
 
 class BDService {
     initializedEntities = [];
@@ -13,7 +14,7 @@ class BDService {
     }
 
     initializeEntities() {
-        const entities = [UserEntity, BaseEntity, UserRoleEntity]
+        const entities = [UserEntity, BaseEntity, UserRoleEntity, PublicationEntity]
         for (const Entity of entities) {
             const instantiatedEntity = new Entity();
             this.initializedEntities.push(instantiatedEntity)

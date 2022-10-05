@@ -6,6 +6,7 @@ const {BDService, AuthService} = require('./src/services')
 const handleError = require('./src/middleware/error-handler')
 const handleAuth = require('./src/middleware/auth-handler')
 const UserService = require('./src/services/userService')
+const PublicationService = require('./src/services/publicationService')
 
 app.use(express.json())
 app.use(handleAuth)
@@ -25,4 +26,6 @@ function createServices() {
   app.set('authService', authService);
   const userService = new UserService(bdService);
   app.set('userService', userService);
+  const publicationService = new PublicationService(bdService);
+  app.set('publicationService', publicationService);
 }
