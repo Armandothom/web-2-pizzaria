@@ -13,6 +13,7 @@ const swaggerDocument = require('./swagger-options/swagger_output.json');
 
 app.use(express.json())
 app.use(handleAuth)
+app.use(cors());
 app.use('/', routes);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
   persistAuthorization : true
