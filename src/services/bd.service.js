@@ -7,7 +7,9 @@ const ModelNotFoundError = require('../models/errors/model-not-found.error')
 class BDService {
     initializedEntities = [];
     constructor() {
-        this.sequelize = new Sequelize(`postgres://${config.development.username}:${config.development.password}@${config.development.host}:${config.development.port}/${config.development.database}`);
+        const databaseUrlDev = `postgres://${config.development.username}:${config.development.password}@${config.development.host}:${config.development.port}/${config.development.database}`;
+        const databaseUrlProd = `${process.env.DATABASE_URL}`
+        this.sequelize = new Sequelize(process.env.NODE_ENV == 'production' ? databaseUrlProd : databaseUrlDev);
         this.initializeEntities();
         this.setAssociation();
     }
