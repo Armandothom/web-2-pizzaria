@@ -9,7 +9,8 @@ const UserService = require('./src/services/userService')
 const PublicationService = require('./src/services/publicationService')
 const router = require('express').Router();
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger-options/swagger_output.json');
+var cors = require('cors');
+const swaggerDocument = require('./swagger-options/swagger_output');
 
 app.use(express.json())
 app.use(handleAuth)

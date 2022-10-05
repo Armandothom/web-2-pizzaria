@@ -1,3 +1,4 @@
+const options =
 {
   "swagger": "2.0",
   "info": {
@@ -5,7 +6,7 @@
     "title": "REST API - PIZZARIA",
     "description": "Swagger para o trabalho de web 2"
   },
-  "host": "localhost:3000",
+  "host": (process.env.NODE_ENV ? "pgsql-web-2.herokuapp.com" : "localhost:3000"),
   "basePath": "/",
   "schemes": [
     "http",
@@ -296,3 +297,5 @@
     }
   }
 }
+
+module.exports = options
