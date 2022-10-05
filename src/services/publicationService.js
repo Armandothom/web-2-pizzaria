@@ -32,6 +32,17 @@ class PublicationService {
             throw error;
         }
     }
+
+    async likePublicacao(publicacaoId) {
+        try {
+            const publicacao = await this.bd.getById(this.publicationEntity.modelName, publicacaoId);
+            publicacao.likes += 1;
+            await this.bd.editItem(this.publicationEntity.modelName, publicacao, publicacao.id);
+        } catch (error) {
+            console.error(error)
+            throw error;
+        }
+    }
 }
 
 module.exports = PublicationService

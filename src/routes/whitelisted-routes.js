@@ -11,6 +11,10 @@ const noAuthRoutes = [
         url : "/publication",
         method : 'GET'
     },
+    {
+        url : "/publication/like",
+        method : 'PUT'
+    },
 ];
 
 const adminRoutes = [

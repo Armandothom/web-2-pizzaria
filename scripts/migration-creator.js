@@ -2,7 +2,6 @@ const fs = require('fs');
 const exec = require('await-exec')
 const nameMigration = process.env.npm_config_name
 const entitiesPathSuffix = "./src/models/entities"
-const userEntity = require('../src/models/entities/user.entity')
 
 createMigration();
 

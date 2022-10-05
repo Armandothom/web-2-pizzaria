@@ -18,4 +18,12 @@ routing.get('/', async (request, response, next) => {
     }
 })
 
+routing.put('/like/:id', async (request, response, next) => {
+    try {
+        await request.app.get('publicationService').likePublicacao(request.params.id);
+        response.send({success : true});
+    } catch(err) {
+        next(err);
+    }
+})
 module.exports = routing;

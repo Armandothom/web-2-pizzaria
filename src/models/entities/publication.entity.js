@@ -26,6 +26,11 @@ class PublicationEntity extends BaseEntity {
                 type : DataTypes.DECIMAL,
                 unique : false
             },
+            likes  : {
+                type : DataTypes.INTEGER,
+                unique : false,
+                defaultValue : 0
+            },
             user_id : {
                 type : DataTypes.INTEGER,
                 allowNull : false,

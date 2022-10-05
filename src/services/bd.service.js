@@ -1,9 +1,8 @@
 
 const { Sequelize } = require('sequelize');
 const config = require('../../config/config.json')
-const {BaseEntity, UserEntity, UserRoleEntity} = require('../models/entities')
+const {BaseEntity, UserEntity, UserRoleEntity, PublicationEntity, CommentEntity} = require('../models/entities')
 const ModelNotFoundError = require('../models/errors/model-not-found.error')
-const PublicationEntity = require('../models/entities/publication.entity')
 
 class BDService {
     initializedEntities = [];
@@ -14,7 +13,7 @@ class BDService {
     }
 
     initializeEntities() {
-        const entities = [UserEntity, BaseEntity, UserRoleEntity, PublicationEntity]
+        const entities = [UserEntity, BaseEntity, UserRoleEntity, PublicationEntity, CommentEntity]
         for (const Entity of entities) {
             const instantiatedEntity = new Entity();
             this.initializedEntities.push(instantiatedEntity)
@@ -103,10 +102,15 @@ class BDService {
         }
     }
 
-    async getById(modelName, options = null) {
+    async getById(modelName, id) {
         try {
             let model = this.getModel(modelName);
-            return await model.findOne(options ? options : {})
+            const modelValue = await model.findOne({
+                where : {
+                    id : id
+                }
+            })
+            return modelValue.get({plain : true})
         } catch (error) {
             throw error;
         }
