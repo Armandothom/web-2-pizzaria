@@ -6,7 +6,11 @@ const noAuthRoutes = [
     {
         url : "/auth/register",
         method : 'POST'
-    }
+    },
+    {
+        url : "/publication",
+        method : 'GET'
+    },
 ];
 
 const adminRoutes = [

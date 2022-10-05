@@ -30,7 +30,8 @@ async function handleAuth(req, res, next) {
 }
 
     function replaceUrlToHandle(urlString) {
-        let url = urlString.replace(/[0-9]/g, '');
+        let url = urlString.split('?')[0];
+        url = url.replace(/[0-9]/g, '');
         return url[url.length - 1] == '/' ? url.substring(0, url.length - 1) : url
     }
 

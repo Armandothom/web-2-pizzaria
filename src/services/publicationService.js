@@ -1,5 +1,6 @@
 const BDService = require("./bd.service");
 const { UserEntity, PublicationEntity } = require("../models/entities");
+const { Op } = require("sequelize");
 
 class PublicationService {
     constructor(bdService = new BDService()) {
@@ -12,6 +13,20 @@ class PublicationService {
         try {
             publicacaoDto.user_id = userId;
             await this.bd.insert(this.publicationEntity.modelName, publicacaoDto);
+        } catch (error) {
+            console.error(error)
+            throw error;
+        }
+    }
+
+    async getPublicacao(valorMaximo, ingredientes) {
+        try {
+            return await this.bd.getAll(this.publicationEntity.modelName, {
+                where : {
+                    ...(ingredientes ? {ingredientes : {[Op.iLike]: `${ingredientes}%`}} : {}),
+                    ...(valorMaximo ? {valor : {[Op.lte]: +valorMaximo}} : {})
+                }
+            })
         } catch (error) {
             console.error(error)
             throw error;
