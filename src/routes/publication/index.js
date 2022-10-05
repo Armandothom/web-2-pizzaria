@@ -9,6 +9,25 @@ routing.post('/', async (request, response, next) => {
     }
 })
 
+routing.post('/comment/:idpublicacao', async (request, response, next) => {
+    try {
+        
+        await request.app.get('publicationService').commentPublicacao(request.body, request.params.idpublicacao);
+        response.send({success : true});
+    } catch(err) {
+        next(err);
+    }
+})
+
+routing.get('/comment/:idpublicacao', async (request, response, next) => {
+    try {
+        const comentarios = await request.app.get('publicationService').getComentarios(request.params.idpublicacao);
+        response.send(comentarios)
+    } catch(err) {
+        next(err);
+    }
+})
+
 routing.get('/', async (request, response, next) => {
     try {
         const publicationItems = await request.app.get('publicationService').getPublicacao(request.query.valor, request.query.ingredientes);

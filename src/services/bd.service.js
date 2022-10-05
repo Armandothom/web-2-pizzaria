@@ -110,7 +110,7 @@ class BDService {
                     id : id
                 }
             })
-            return modelValue.get({plain : true})
+            return modelValue ? modelValue.get({plain : true}) : null
         } catch (error) {
             throw error;
         }

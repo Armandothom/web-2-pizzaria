@@ -8,7 +8,8 @@ class CommentEntity extends BaseEntity {
         this.setAttributes({
             mensagem  : {
                 type : DataTypes.STRING,
-                unique : false
+                unique : false,
+                allowNull : false
             },
             publicacao_id : {
                 type : DataTypes.INTEGER,
