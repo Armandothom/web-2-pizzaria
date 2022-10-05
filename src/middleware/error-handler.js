@@ -1,6 +1,7 @@
 const HttpError = require('../models/errors/http.error')
 const HttpBadRequest = require('../models/errors/http-bad-request.error')
 function handleError(err, req, res, next) {
+    console.log(err)
     if (err.name == 'SequelizeValidationError' || err.name == "SequelizeUniqueConstraintError") {
         const sequelizeErrorDetail = err.errors[0];
         switch (sequelizeErrorDetail.validatorKey) {
