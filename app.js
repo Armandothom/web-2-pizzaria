@@ -20,8 +20,8 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
 createServices();
 app.use(handleError)
 
-app.listen(port, () => {
-  console.log(`Inicializado port:${port}`)
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Inicializado port:${process.env.PORT || 3000}`)
 })
 
 
