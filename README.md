@@ -11,4 +11,4 @@ Instruções:
 
 4 - Acessar a rota do swagger: /docs
 
-Alternativamente, acessar o aplicativo em deploy na url: https://pgsql-web-2.herokuapp.com/docs/ e trocar o select do swagger de HTTP para HTTPS.
+Alternativamente, acessar o aplicativo em deploy na url: https://pgsql-web-2.herokuapp.com/docs/ e trocar o select do swagger de HTTP para HTTPS. Os usuários e senhas são os mesmos do arquivo seed.sql.
