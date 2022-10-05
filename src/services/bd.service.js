@@ -10,9 +10,21 @@ class BDService {
         const databaseUrlDev = `postgres://${config.development.username}:${config.development.password}@${config.development.host}:${config.development.port}/${config.development.database}`;
         const databaseUrlProd = `${process.env.DATABASE_URL}`
         console.log(`Inicializando DB com ${process.env.NODE_ENV == 'production' ? databaseUrlProd : databaseUrlDev}`)
-        this.sequelize = new Sequelize(process.env.NODE_ENV == 'production' ? databaseUrlProd : databaseUrlDev);
+        this.sequelize = new Sequelize(process.env.NODE_ENV == 'production' ? databaseUrlProd : databaseUrlDev, this.getDBProdOptions());
         this.initializeEntities();
         this.setAssociation();
+    }
+
+    getDBProdOptions() {
+        return process.env.NODE_ENV == 'production' ? {
+            ssl : true,
+            dialectOptions: {
+                ssl: {
+                  require: true,
+                  rejectUnauthorized: false
+                }
+              }
+        } : null
     }
 
     initializeEntities() {
