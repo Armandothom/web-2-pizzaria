@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
+    "start": "node app.js",
+    "start-nodemon" : "nodemon app.js",
     "swagger-gen" : "node ./swagger/swagger.js",
     "create-migration": "node ./scripts/migration-creator.js",
     "migration": "npx sequelize-cli db:migrate"
