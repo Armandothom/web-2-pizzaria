@@ -9,6 +9,7 @@ class BDService {
     constructor() {
         const databaseUrlDev = `postgres://${config.development.username}:${config.development.password}@${config.development.host}:${config.development.port}/${config.development.database}`;
         const databaseUrlProd = `${process.env.DATABASE_URL}`
+        console.log(`Inicializando DB com ${process.env.NODE_ENV == 'production' ? databaseUrlProd : databaseUrlDev}`)
         this.sequelize = new Sequelize(process.env.NODE_ENV == 'production' ? databaseUrlProd : databaseUrlDev);
         this.initializeEntities();
         this.setAssociation();
