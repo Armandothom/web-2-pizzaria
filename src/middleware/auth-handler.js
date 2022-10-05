@@ -8,7 +8,11 @@ async function handleAuth(req, res, next) {
     try {
         const url = replaceUrlToHandle(req.originalUrl);
         const method = req.method;
-        if (noAuthRoutes.find(noAuthRoute => noAuthRoute.url == url && noAuthRoute.method == method)) {
+        if (noAuthRoutes.find(noAuthRoute => {
+            if(url.includes("docs") || (noAuthRoute.url == url && noAuthRoute.method == method)) {
+                return true;
+            }
+        })) {
             next();
             return;
         }

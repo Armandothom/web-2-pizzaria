@@ -7,15 +7,21 @@ const handleError = require('./src/middleware/error-handler')
 const handleAuth = require('./src/middleware/auth-handler')
 const UserService = require('./src/services/userService')
 const PublicationService = require('./src/services/publicationService')
+const router = require('express').Router();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-options/swagger_output.json');
 
 app.use(express.json())
 app.use(handleAuth)
 app.use('/', routes);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
+  persistAuthorization : true
+}));
 createServices();
 app.use(handleError)
 
 app.listen(port, () => {
-  console.log(`WEB 2 APLICAÇÃO`)
+  console.log(`Inicializado port:${port}`)
 })
 
 
