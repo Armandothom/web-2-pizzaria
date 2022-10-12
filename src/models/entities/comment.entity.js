@@ -19,7 +19,18 @@ class CommentEntity extends BaseEntity {
                     key : "id",
                     field : "publicacao_id"
                 }
-            }
+            },
+            likes  : {
+                type : DataTypes.INTEGER,
+                unique : false,
+                defaultValue : 0
+            },
+            
+            dislikes  : {
+                type : DataTypes.INTEGER,
+                unique : false,
+                defaultValue : 0
+            },
         })
     }
     

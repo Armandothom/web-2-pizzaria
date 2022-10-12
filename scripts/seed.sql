@@ -1,7 +1,7 @@
 INSERT INTO userrole ("nomeRole", "adminRights")
 VALUES
 ('Usuario', false),
-('Admin', true)
+('Admin', true);
 
 INSERT INTO "user" (nome, email, password, user_role_id)
 VALUES

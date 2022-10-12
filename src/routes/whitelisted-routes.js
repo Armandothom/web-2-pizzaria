@@ -12,6 +12,10 @@ const noAuthRoutes = [
         method : 'GET'
     },
     {
+        url : "/publication/mostlikes",
+        method : 'GET'
+    },
+    {
         url : "/publication/like",
         method : 'PUT'
     },

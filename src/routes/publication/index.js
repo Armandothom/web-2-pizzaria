@@ -28,9 +28,35 @@ routing.get('/comment/:idpublicacao', async (request, response, next) => {
     }
 })
 
+routing.put('/comment/like/:id', async (request, response, next) => {
+    try {
+        await request.app.get('publicationService').likeComment(request.params.id);
+        response.send({success : true});
+    } catch(err) {
+        next(err);
+    }
+})
+
+routing.put('/comment/dislike/:id', async (request, response, next) => {
+    try {
+        await request.app.get('publicationService').dislikeComment(request.params.id);
+        response.send({success : true});
+    } catch(err) {
+        next(err);
+    }
+})
 routing.get('/', async (request, response, next) => {
     try {
         const publicationItems = await request.app.get('publicationService').getPublicacao(request.query.valor, request.query.ingredientes);
+        response.send(publicationItems);
+    } catch(err) {
+        next(err);
+    }
+})
+
+routing.get('/mostlikes', async (request, response, next) => {
+    try {
+        const publicationItems = await request.app.get('publicationService').getPublicacaoMostLikes(request.query.valor, request.query.ingredientes);
         response.send(publicationItems);
     } catch(err) {
         next(err);

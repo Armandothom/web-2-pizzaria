@@ -35,10 +35,10 @@ const options =
               "type": "object",
               "properties": {
                 "email": {
-                  "example": "armando@hotmail.com"
+                  "example": "admin@hotmail.com"
                 },
                 "password": {
-                  "example": "1234a"
+                  "example": "admin12345"
                 }
               }
             }
@@ -231,6 +231,17 @@ const options =
         }
       }
     },
+    "/publication/mostlikes": {
+      "get": {
+        "description": "Buscar publicação com maior numero de likes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/publication/comment/{idpublicacao}": {
       "post": {
         "description": "Adicionar um comentário a uma publicação",
@@ -294,7 +305,43 @@ const options =
           }
         }
       }
-    }
+    },
+    "/publication/comment/like/{id}": {
+      "put": {
+        "description": "Endpoint para dar like em um comentário",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/publication/comment/dislike/{id}": {
+      "put": {
+        "description": "Endpoint para dar dislike em um comentário",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
   }
 }
 

@@ -36,13 +36,54 @@ class PublicationService {
         }
     }
 
+    async getPublicacaoMostLikes() {
+        try {
+            const resp = await this.bd.getAll(this.publicationEntity.modelName, {
+                order : [['likes', "DESC"]]
+            })
+            return resp.length > 0 ? resp[0] : []
+        } catch (error) {
+            console.error(error)
+            throw error;
+        }
+    }
+
     async getComentarios(idPublicacao) {
         try {
-            return await this.bd.getAll(this.commentEntity.modelName, {
+            const comentarios = await this.bd.getAll(this.commentEntity.modelName, {
                 where : {
                     publicacao_id : idPublicacao
                 }
             })
+            return comentarios.sort((a, b) => (b.likes - b.dislikes) - (a.likes - a.dislikes))
+        } catch (error) {
+            console.error(error)
+            throw error;
+        }
+    }
+
+    async likeComment(commentId) {
+        try {
+            const comment = await this.bd.getById(this.commentEntity.modelName, commentId);
+            if(!comment) {
+                throw new HttpNotFoundError(`Comentario inexistente`);
+            }
+            comment.likes += 1;
+            await this.bd.editItem(this.commentEntity.modelName, comment, comment.id);
+        } catch (error) {
+            console.error(error)
+            throw error;
+        }
+    }
+
+    async dislikeComment(commentId) {
+        try {
+            const comment = await this.bd.getById(this.commentEntity.modelName, commentId);
+            if(!comment) {
+                throw new HttpNotFoundError(`Comentario inexistente`);
+            }
+            comment.dislikes += 1;
+            await this.bd.editItem(this.commentEntity.modelName, comment, comment.id);
         } catch (error) {
             console.error(error)
             throw error;
